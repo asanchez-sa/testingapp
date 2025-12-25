@@ -11,7 +11,9 @@ This is a **Turborepo monorepo** created with Better-T-Stack, using **Bun** as t
 ```
 superapp/
 ├── apps/
-│   └── fumadocs/          # Fumadocs documentation site (TanStack Start + Vite)
+│   ├── fumadocs/          # Fumadocs documentation site (TanStack Start + Vite)
+│   ├── vidacamara/        # React Native app with Expo Router (main app)
+│   └── storybook/         # React Native Storybook for component development
 ├── packages/
 │   ├── config/            # Shared TypeScript configuration
 │   ├── database/          # Database utilities and schemas
@@ -28,6 +30,22 @@ superapp/
   - MDX content in `apps/fumadocs/content/docs/`
   - Runs on port 3000 (dev server on port 4000)
 
+- **vidacamara**: React Native app using Expo Router and React 19
+  - File-based routing with Expo Router (see `app/` directory)
+  - Expo SDK 54 with React Native 0.81.5
+  - React Native New Architecture enabled (`newArchEnabled: true`)
+  - React Compiler enabled (experimental)
+  - Typed routes enabled
+  - Tab-based navigation in `app/(tabs)/`
+  - Supports iOS, Android, and Web platforms
+
+- **storybook**: React Native Storybook for component development
+  - Configured with `@storybook/react-native` v10
+  - On-device controls and actions addons
+  - Stories located in `.rnstorybook/stories/`
+  - Metro bundler configured with Storybook integration
+  - Run `bun run storybook-generate` to update story imports
+
 ### Packages
 
 All packages are scoped with `@superapp/` namespace. Currently includes:
@@ -41,6 +59,23 @@ All packages are scoped with `@superapp/` namespace. Currently includes:
 bun install              # Install dependencies
 bun run dev              # Start all apps in development mode
 bun run dev:web          # Start only the web application
+bun run dev:native       # Start only the native application (vidacamara)
+```
+
+### React Native (Expo) Commands
+
+```bash
+# vidacamara app
+cd apps/vidacamara
+bun start                # Start Expo dev server
+bun android              # Run on Android
+bun ios                  # Run on iOS
+bun web                  # Run on Web
+
+# storybook app
+cd apps/storybook
+bun start                # Start Expo dev server
+bun storybook-generate   # Update Storybook story imports
 ```
 
 ### Building & Type Checking
@@ -92,6 +127,17 @@ turbo build              # Build all apps and packages
 - **Server**: Nitro 3.0 (alpha)
 - **Icons**: Lucide React
 
+### React Native Apps Stack
+
+**vidacamara & storybook:**
+- **Runtime**: React 19.1.0 with React Native 0.81.5
+- **Framework**: Expo SDK 54
+- **Router**: Expo Router 6 (file-based routing)
+- **Navigation**: React Navigation 7 with bottom tabs
+- **Animations**: React Native Reanimated 4.1 + React Native Gesture Handler 2.28
+- **Components**: Expo built-in components (expo-image, expo-symbols, etc.)
+- **Platform Support**: iOS, Android, and Web (via react-native-web)
+
 ## TypeScript Configuration
 
 Base configuration is in `packages/config/tsconfig.base.json` with strict settings:
@@ -109,6 +155,17 @@ Configured tasks in `turbo.json`:
 - **lint**: Depends on `^lint`
 - **check-types**: Depends on `^check-types`
 - **dev**: No cache, persistent (for development servers)
+
+## Architecture Patterns
+
+### Expo Router File-Based Routing
+
+Both React Native apps use Expo Router for file-based routing:
+- Routes are defined by the file structure in `app/` directory
+- Files named `_layout.tsx` define layout wrappers for nested routes
+- Folders with parentheses like `(tabs)/` create route groups without affecting the URL
+- The `index.tsx` file maps to the root route of its directory
+- Typed routes are enabled for type-safe navigation
 
 ## Code Standards (Ultracite/Biome)
 
@@ -160,6 +217,13 @@ Write code that is **accessible, performant, type-safe, and maintainable**. Focu
 #### React 19+ Specific
 
 - Use ref as a prop instead of `React.forwardRef`
+
+#### React Native Specific
+
+- Use `className` and `htmlFor` for web compatibility (React Native Web)
+- Prefer Expo components (e.g., `expo-image`) over bare React Native components for cross-platform consistency
+- Use React Native Reanimated for animations instead of Animated API
+- Follow Expo Router file-based routing conventions (files in `app/` directory)
 
 #### Error Handling & Debugging
 
