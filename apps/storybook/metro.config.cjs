@@ -1,15 +1,16 @@
+"use strict";
 // Learn more https://docs.expo.io/guides/customizing-metro
 const { getDefaultConfig } = require("expo/metro-config");
 const path = require("node:path");
 
 // Obtén la ruta de tu app actual
-const projectRoot = import.meta.dirname;
+const projectRoot = __dirname;
 
 // Obtén la ruta raíz del workspace (dos niveles arriba)
 const workspaceRoot = path.resolve(projectRoot, "../..");
 
 /** @type {import('expo/metro-config').MetroConfig} */
-const config = getDefaultConfig(__dirname);
+const config = getDefaultConfig(projectRoot);
 
 // Indica a Metro que observe cambios en todo el monorepo
 config.watchFolders = [workspaceRoot];

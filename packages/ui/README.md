@@ -149,14 +149,30 @@ packages/ui/
 
 ## 📝 Component Structure Convention
 
-Each component follows this structure:
+Each component **MUST** follow this structure:
 
 - `{component}.tsx` - Main component implementation
 - `{component}.types.ts` - TypeScript interfaces and types
 - `{component}.constants.ts` - Component-specific constants
 - `{component}.styles.ts` - StyleSheet definitions
 - `{component}.md` - Component documentation
+- `{component}.stories.tsx` - **REQUIRED** Storybook stories for visual testing
 - `index.ts` - Component exports
+
+### Example: Complete Button Component Structure
+
+```
+packages/ui/src/components/atoms/button/
+├── button.tsx              # Component implementation
+├── button.types.ts         # TypeScript types
+├── button.constants.ts     # Component constants
+├── button.styles.ts        # Styles
+├── button.md               # Documentation
+├── button.stories.tsx      # ⭐ REQUIRED: Storybook stories
+└── index.ts                # Exports
+```
+
+**Important**: Every component must include a `.stories.tsx` file for visual testing and documentation in Storybook.
 
 ## 🎯 Design Principles
 
@@ -208,38 +224,205 @@ bun x ultracite check
 ### 1. Create Component Structure
 
 ```bash
-# For an atom
-mkdir -p packages/ui/src/components/atoms/my-component
+# For an atom (example: Avatar)
+mkdir -p packages/ui/src/components/atoms/avatar
 
-# Create files
-touch packages/ui/src/components/atoms/my-component/{my-component.tsx,my-component.types.ts,my-component.constants.ts,my-component.styles.ts,my-component.md,index.ts}
+# Create ALL required files (including stories!)
+touch packages/ui/src/components/atoms/avatar/{avatar.tsx,avatar.types.ts,avatar.constants.ts,avatar.styles.ts,avatar.md,avatar.stories.tsx,index.ts}
+
+# For a molecule (example: InputField)
+mkdir -p packages/ui/src/components/molecules/input-field
+
+# Create ALL required files
+touch packages/ui/src/components/molecules/input-field/{input-field.tsx,input-field.types.ts,input-field.constants.ts,input-field.styles.ts,input-field.md,input-field.stories.tsx,index.ts}
 ```
 
 ### 2. Implement Component Files
 
-Follow the Button component as a reference implementation.
+Follow the Button component (`packages/ui/src/components/atoms/button/`) as a reference implementation for all files.
 
-### 3. Export Component
+### 3. Create Storybook Stories (REQUIRED)
 
-Add export to `packages/ui/src/components/atoms/index.ts`:
+Every component **MUST** have a `.stories.tsx` file. Example template:
 
 ```typescript
-export * from './my-component';
+import type { Meta, StoryObj } from '@storybook/react-native';
+import { Alert } from 'react-native';
+import { Avatar } from './avatar';
+
+const meta = {
+  title: 'Atoms/Avatar',  // Atoms|Molecules|Organisms|Templates
+  component: Avatar,
+  argTypes: {
+    size: {
+      control: 'select',
+      options: ['small', 'medium', 'large'],
+      description: 'Avatar size',
+    },
+    source: {
+      control: 'text',
+      description: 'Image source URL',
+    },
+  },
+  args: {
+    size: 'medium',
+    source: 'https://example.com/avatar.jpg',
+  },
+} satisfies Meta<typeof Avatar>;
+
+export default meta;
+
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};
+export const Small: Story = { args: { size: 'small' } };
+export const Large: Story = { args: { size: 'large' } };
 ```
 
-### 4. Document Component
+#### Story Naming Convention by Atomic Level:
 
-Create comprehensive documentation in `my-component.md` including:
+```typescript
+// Atoms
+title: 'Atoms/Button'
+title: 'Atoms/Avatar'
+title: 'Atoms/Text'
+
+// Molecules
+title: 'Molecules/InputField'
+title: 'Molecules/Card'
+
+// Organisms
+title: 'Organisms/Form'
+title: 'Organisms/Header'
+
+// Templates
+title: 'Templates/ScreenLayout'
+```
+
+### 4. Export Component
+
+Add export to the appropriate index file:
+
+```typescript
+// For atoms: packages/ui/src/components/atoms/index.ts
+export * from './avatar';
+
+// For molecules: packages/ui/src/components/molecules/index.ts
+export * from './input-field';
+```
+
+### 5. Document Component
+
+Create comprehensive documentation in `{component}.md` including:
 - Component overview
 - Props table
 - Usage examples
 - Variants and states
+- Accessibility notes
+
+### 6. Test in Storybook
+
+```bash
+# Start Storybook app
+turbo -F storybook dev
+
+# Regenerate stories if needed
+cd apps/storybook
+bun run storybook-generate
+```
+
+Navigate to your component in the Storybook app to verify all variants work correctly.
 
 ## 🧪 Testing
 
 ```bash
 # Run tests (when implemented)
 bun test
+```
+
+## 📚 Storybook Integration
+
+This package is fully integrated with Storybook for React Native for visual component development and testing.
+
+### Running Storybook
+
+```bash
+# From project root
+bun run dev
+
+# Or specifically for storybook app
+turbo -F storybook dev
+```
+
+### Storybook Features
+
+- 👁️ **Visual Testing**: View components in isolation
+- 🎮 **Interactive Controls**: Modify props in real-time via controls panel
+- 📱 **Device Testing**: Test on real devices and simulators
+- 🔄 **Variant Comparison**: Compare different variants side-by-side
+- 📸 **Documentation**: Auto-generated component documentation
+
+### Story Best Practices
+
+**Every component MUST include stories for:**
+- ✅ Default state
+- ✅ All variants (e.g., primary, secondary, outline)
+- ✅ All sizes (e.g., small, medium, large)
+- ✅ Disabled state
+- ✅ Edge cases
+- ✅ Composition examples (showing multiple variants together)
+
+### Story Controls
+
+Make stories interactive with `argTypes`:
+
+```typescript
+argTypes: {
+  variant: { 
+    control: 'select', 
+    options: ['primary', 'secondary', 'outline'],
+    description: 'Button variant style',
+  },
+  disabled: { 
+    control: 'boolean',
+    description: 'Disable the button',
+  },
+  size: { 
+    control: 'select', 
+    options: ['small', 'medium', 'large'],
+    description: 'Button size',
+  },
+}
+```
+
+### Storybook File Location
+
+Stories are co-located with their components:
+
+```
+packages/ui/src/components/
+├── atoms/
+│   ├── button/
+│   │   └── button.stories.tsx
+│   └── avatar/
+│       └── avatar.stories.tsx
+├── molecules/
+│   └── card/
+│       └── card.stories.tsx
+└── organisms/
+    └── form/
+        └── form.stories.tsx
+```
+
+### Story Discovery
+
+The Storybook app automatically discovers all `.stories.tsx` files:
+
+```typescript
+// apps/storybook/.rnstorybook/main.ts
+stories: [
+  "../../../packages/ui/src/components/**/*.stories.?(ts|tsx|js|jsx)",
+]
 ```
 
 ## 📄 License
@@ -250,6 +433,27 @@ Private - Part of Superapp monorepo
 
 This is a private monorepo package. Follow the project's coding standards and conventions when adding new components.
 
+### Component Checklist
+
+Before submitting a new component, ensure:
+
+- ✅ All 7 required files are created (tsx, types, constants, styles, md, **stories**, index)
+- ✅ Component follows Atomic Design principles
+- ✅ TypeScript types are properly exported
+- ✅ Storybook stories cover all variants and states
+- ✅ Component documentation is complete
+- ✅ Code passes `bun run check-types`
+- ✅ Code is formatted with `bun x ultracite fix`
+- ✅ Component is tested in Storybook app
+
+## 📚 Resources
+
+- [Storybook React Native Docs](https://github.com/storybookjs/react-native)
+- [Component Story Format (CSF)](https://storybook.js.org/docs/react/api/csf)
+- [Atomic Design Methodology](https://atomicdesign.bradfrost.com/)
+- [React Native Documentation](https://reactnative.dev/)
+- [TypeScript Handbook](https://www.typescriptlang.org/docs/)
+
 ---
 
-**Built with ❤️ using React Native, TypeScript, and Atomic Design**
+**Built with ❤️ using React Native, TypeScript, Atomic Design, and Storybook**
