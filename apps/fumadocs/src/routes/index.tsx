@@ -16,7 +16,7 @@ function Home() {
         <Link
           className="mx-auto rounded-lg bg-fd-primary px-3 py-2 font-medium text-fd-primary-foreground text-sm"
           params={{
-            _splat: "",
+            _splat: "core",
           }}
           to="/docs/$"
         >

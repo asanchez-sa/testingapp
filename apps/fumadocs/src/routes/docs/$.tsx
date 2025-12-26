@@ -3,6 +3,7 @@ import { createFileRoute, notFound } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import { useFumadocsLoader } from "fumadocs-core/source/client";
 import { DocsLayout } from "fumadocs-ui/layouts/docs";
+
 import {
   DocsBody,
   DocsDescription,
@@ -10,6 +11,7 @@ import {
   DocsTitle,
 } from "fumadocs-ui/layouts/docs/page";
 import defaultMdxComponents from "fumadocs-ui/mdx";
+import { Boxes, Cpu, PencilRuler, TabletSmartphone } from "lucide-react";
 import { baseOptions } from "@/lib/layout.shared";
 import { source } from "@/lib/source";
 
@@ -29,7 +31,10 @@ const serverLoader = createServerFn({
   .inputValidator((slugs: string[]) => slugs)
   .handler(async ({ data: slugs }) => {
     const page = source.getPage(slugs);
-    if (!page) throw notFound();
+
+    if (!page) {
+      throw notFound();
+    }
 
     return {
       path: page.path,
@@ -40,7 +45,12 @@ const serverLoader = createServerFn({
 const clientLoader = browserCollections.docs.createClientLoader({
   component({ toc, frontmatter, default: MDX }) {
     return (
-      <DocsPage toc={toc}>
+      <DocsPage
+        tableOfContent={{
+          style: "clerk",
+        }}
+        toc={toc}
+      >
         <DocsTitle>{frontmatter.title}</DocsTitle>
         <DocsDescription>{frontmatter.description}</DocsDescription>
         <DocsBody>
@@ -61,7 +71,38 @@ function Page() {
   const Content = clientLoader.getComponent(data.path);
 
   return (
-    <DocsLayout {...baseOptions()} tree={pageTree}>
+    <DocsLayout
+      {...baseOptions()}
+      sidebar={{
+        tabs: [
+          {
+            title: "Core",
+            description: "Hello World!",
+            url: "/docs/core",
+            icon: <Cpu className="size-full" />,
+          },
+          {
+            title: "Apps",
+            description: "Hello World!",
+            url: "/docs/apps",
+            icon: <TabletSmartphone className="size-full" />,
+          },
+          {
+            title: "Packages",
+            description: "Hello World!",
+            url: "/docs/packages",
+            icon: <Boxes className="size-full" />,
+          },
+          {
+            title: "Tools",
+            description: "Hello World!",
+            url: "/docs/tools",
+            icon: <PencilRuler className="size-full" />,
+          },
+        ],
+      }}
+      tree={pageTree}
+    >
       <Content />
     </DocsLayout>
   );
