@@ -1,0 +1,146 @@
+import type { Meta, StoryObj } from '@storybook/react-native';
+import { Alert } from 'react-native';
+import { {{pascalCase name}} } from './{{kebabCase name}}';
+
+/**
+ * {{description}}
+ */
+const meta = {
+  title: '{{capitalizeFirst atomicLevel}}/{{pascalCase name}}',
+  component: {{pascalCase name}},
+  argTypes: {
+    title: {
+      control: 'text',
+      description: 'The text to display',
+    },
+    {{#if hasVariants}}
+    variant: {
+      control: 'select',
+      options: ['primary', 'secondary', 'outline'],
+      description: 'The visual variant',
+    },
+    {{/if}}
+    {{#if hasSizes}}
+    size: {
+      control: 'select',
+      options: ['small', 'medium', 'large'],
+      description: 'The size',
+    },
+    {{/if}}
+    disabled: {
+      control: 'boolean',
+      description: 'Whether the component is disabled',
+    },
+    onPress: {
+      action: 'pressed',
+      description: 'Function called when pressed',
+    },
+  },
+  args: {
+    title: '{{pascalCase name}}',
+    {{#if hasVariants}}variant: 'primary',{{/if}}
+    {{#if hasSizes}}size: 'medium',{{/if}}
+    disabled: false,
+    onPress: () => Alert.alert('{{pascalCase name}} Pressed', 'You pressed the {{lowerCase name}}!'),
+  },
+} satisfies Meta<typeof {{pascalCase name}}>;
+
+export default meta;
+
+type Story = StoryObj<typeof meta>;
+
+/**
+ * Default {{lowerCase name}}
+ */
+export const Default: Story = {};
+
+{{#if hasVariants}}
+/**
+ * Primary variant
+ */
+export const Primary: Story = {
+  args: {
+    title: 'Primary {{pascalCase name}}',
+    variant: 'primary',
+  },
+};
+
+/**
+ * Secondary variant
+ */
+export const Secondary: Story = {
+  args: {
+    title: 'Secondary {{pascalCase name}}',
+    variant: 'secondary',
+  },
+};
+
+/**
+ * Outline variant
+ */
+export const Outline: Story = {
+  args: {
+    title: 'Outline {{pascalCase name}}',
+    variant: 'outline',
+  },
+};
+{{/if}}
+
+{{#if hasSizes}}
+/**
+ * Small size
+ */
+export const Small: Story = {
+  args: {
+    title: 'Small {{pascalCase name}}',
+    size: 'small',
+  },
+};
+
+/**
+ * Medium size (default)
+ */
+export const Medium: Story = {
+  args: {
+    title: 'Medium {{pascalCase name}}',
+    size: 'medium',
+  },
+};
+
+/**
+ * Large size
+ */
+export const Large: Story = {
+  args: {
+    title: 'Large {{pascalCase name}}',
+    size: 'large',
+  },
+};
+{{/if}}
+
+/**
+ * Disabled state
+ */
+export const Disabled: Story = {
+  args: {
+    title: 'Disabled {{pascalCase name}}',
+    disabled: true,
+  },
+};
+
+{{#if hasVariants}}
+{{#if hasSizes}}
+/**
+ * All variants side by side
+ */
+export const AllVariants: Story = {
+  render: () => (
+    <>
+      <{{pascalCase name}} title="Primary" variant="primary" onPress={() => Alert.alert('Primary')} />
+      <{{pascalCase name}} title="Secondary" variant="secondary" onPress={() => Alert.alert('Secondary')} />
+      <{{pascalCase name}} title="Outline" variant="outline" onPress={() => Alert.alert('Outline')} />
+    </>
+  ),
+};
+{{/if}}
+{{/if}}

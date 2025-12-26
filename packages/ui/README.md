@@ -20,6 +20,36 @@ This package is part of the Superapp monorepo and is already configured as a wor
 bun install
 ```
 
+## ⚡ Quick Start: Generate a New Component
+
+Use Plop to quickly scaffold a new component with all 7 required files automatically:
+
+```bash
+cd packages/ui
+bun run generate
+
+# Or directly
+bun run generate:component
+```
+
+**The generator will create:**
+- ✅ Component implementation (`.tsx`)
+- ✅ TypeScript types (`.types.ts`)
+- ✅ Constants (`.constants.ts`)
+- ✅ Styles (`.styles.ts`)
+- ✅ Documentation (`.md`)
+- ✅ Storybook stories (`.stories.tsx`)
+- ✅ Index exports (`index.ts`)
+
+**Interactive prompts:**
+1. Component name (PascalCase, e.g., `Avatar`)
+2. Atomic Design level (atoms, molecules, organisms, templates)
+3. Brief description
+4. Has variants? (yes/no)
+5. Has sizes? (yes/no)
+
+📖 **Full Generator Guide**: See `plop/GENERATOR_GUIDE.md` for detailed documentation.
+
 ## 📖 Usage
 
 ### Direct Import (Recommended for Tree-Shaking)
@@ -221,7 +251,20 @@ bun x ultracite check
 
 ## 📚 Adding New Components
 
-### 1. Create Component Structure
+### Option 1: Use the Generator (Recommended) ⭐
+
+The fastest and most consistent way to create components:
+
+```bash
+cd packages/ui
+bun run generate
+```
+
+Follow the interactive prompts and all 7 files will be created automatically!
+
+### Option 2: Manual Creation
+
+If you prefer to create components manually:
 
 ```bash
 # For an atom (example: Avatar)

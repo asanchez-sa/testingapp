@@ -1,0 +1,43 @@
+import { StyleSheet } from 'react-native';
+import { {{constantCase name}}_COLORS } from './{{kebabCase name}}.constants';
+
+export const styles = StyleSheet.create({
+  container: {
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    minWidth: 100,
+  },
+  {{#if hasVariants}}
+  primary: {
+    backgroundColor: {{constantCase name}}_COLORS.primary,
+  },
+  secondary: {
+    backgroundColor: {{constantCase name}}_COLORS.secondary,
+  },
+  outline: {
+    backgroundColor: 'transparent',
+    borderWidth: 2,
+    borderColor: {{constantCase name}}_COLORS.outline,
+  },
+  {{/if}}
+  pressed: {
+    opacity: 0.7,
+  },
+  disabled: {
+    backgroundColor: {{constantCase name}}_COLORS.disabled,
+    {{#if hasVariants}}borderColor: {{constantCase name}}_COLORS.disabled,{{/if}}
+  },
+  text: {
+    color: {{constantCase name}}_COLORS.text,
+    fontWeight: '600',
+  },
+  {{#if hasVariants}}
+  textOutline: {
+    color: {{constantCase name}}_COLORS.textOutline,
+  },
+  {{/if}}
+  textDisabled: {
+    color: {{constantCase name}}_COLORS.textDisabled,
+  },
+});

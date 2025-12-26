@@ -2,13 +2,24 @@
   "extends": "../config/tsconfig.base.json",
   "compilerOptions": {
     "jsx": "react-native",
-    "lib": ["ESNext"],
-    "types": ["react", "react-native"],
+    "lib": [
+      "ESNext"
+    ],
+    "types": [
+      "react",
+      "react-native"
+    ],
     "baseUrl": ".",
     "paths": {
-      "@superapp/ui": ["./src/index.ts"],
-      "@superapp/ui/*": ["./src/*"],
-      "@superapp/ui/components/atoms/*": ["./src/components/atoms/*/index.ts"],
+      "@superapp/ui": [
+        "./src/index.ts"
+      ],
+      "@superapp/ui/*": [
+        "./src/*"
+      ],
+      "@superapp/ui/components/atoms/*": [
+        "./src/components/atoms/*/index.ts"
+      ],
       "@superapp/ui/components/molecules/*": [
         "./src/components/molecules/*/index.ts"
       ],
@@ -18,13 +29,28 @@
       "@superapp/ui/components/templates/*": [
         "./src/components/templates/*/index.ts"
       ],
-      "@superapp/ui/hooks": ["./src/hooks/index.ts"],
-      "@superapp/ui/contexts": ["./src/contexts/index.ts"],
-      "@superapp/ui/utils": ["./src/utils/index.ts"],
-      "@superapp/ui/types": ["./src/types/index.ts"],
-      "@superapp/ui/constants": ["./src/constants/index.ts"]
+      "@superapp/ui/hooks": [
+        "./src/hooks/index.ts"
+      ],
+      "@superapp/ui/contexts": [
+        "./src/contexts/index.ts"
+      ],
+      "@superapp/ui/utils": [
+        "./src/utils/index.ts"
+      ],
+      "@superapp/ui/types": [
+        "./src/types/index.ts"
+      ],
+      "@superapp/ui/constants": [
+        "./src/constants/index.ts"
+      ]
     }
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist"]
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+  ]
 }

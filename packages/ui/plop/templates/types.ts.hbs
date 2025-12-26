@@ -1,0 +1,48 @@
+import type { GestureResponderEvent } from 'react-native';
+
+{{#if hasVariants}}
+export type {{pascalCase name}}Variant = 'primary' | 'secondary' | 'outline';
+{{/if}}
+
+{{#if hasSizes}}
+export type {{pascalCase name}}Size = 'small' | 'medium' | 'large';
+{{/if}}
+
+export interface {{pascalCase name}}Props {
+  /**
+   * The text to display
+   */
+  title: string;
+
+  /**
+   * Function to call when pressed
+   */
+  onPress: (event: GestureResponderEvent) => void;
+
+  /**
+   * If true, the component will be disabled
+   * @default false
+   */
+  disabled?: boolean;
+
+  {{#if hasVariants}}
+  /**
+   * The visual variant
+   * @default 'primary'
+   */
+  variant?: {{pascalCase name}}Variant;
+  {{/if}}
+
+  {{#if hasSizes}}
+  /**
+   * The size of the component
+   * @default 'medium'
+   */
+  size?: {{pascalCase name}}Size;
+  {{/if}}
+
+  /**
+   * Test ID for testing purposes
+   */
+  testID?: string;
+}

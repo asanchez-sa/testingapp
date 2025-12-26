@@ -20,7 +20,9 @@
     "./constants": "./src/constants/index.ts"
   },
   "scripts": {
-    "check-types": "tsc --noEmit"
+    "check-types": "tsc --noEmit",
+    "generate": "plop",
+    "generate:component": "plop component"
   },
   "peerDependencies": {
     "react": "^19.0.0",
@@ -33,6 +35,7 @@
   },
   "devDependencies": {
     "@storybook/react-native": "^10.1.1",
+    "plop": "^4.0.4",
     "typescript": "^5"
   }
 }

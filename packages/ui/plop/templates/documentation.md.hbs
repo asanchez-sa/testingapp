@@ -1,0 +1,142 @@
+# {{pascalCase name}} Component
+
+{{description}}
+
+## Overview
+
+The {{pascalCase name}} component is {{#if (eq atomicLevel 'atoms')}}an atomic{{else if (eq atomicLevel 'molecules')}}a molecular{{else if (eq atomicLevel 'organisms')}}an organism{{else}}a template{{/if}} UI element that provides a consistent interface across your application.
+
+## Import
+
+```typescript
+// Direct import (recommended for tree-shaking)
+import { {{pascalCase name}} } from '@superapp/ui/components/{{atomicLevel}}/{{kebabCase name}}';
+
+// Alternative: from main index
+import { {{pascalCase name}} } from '@superapp/ui';
+```
+
+## Basic Usage
+
+```typescript
+import { {{pascalCase name}} } from '@superapp/ui/components/{{atomicLevel}}/{{kebabCase name}}';
+
+function MyComponent() {
+  return (
+    <{{pascalCase name}}
+      title="Click me"
+      onPress={() => console.log('Pressed')}
+    />
+  );
+}
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `title` | `string` | *required* | The text to display |
+| `onPress` | `(event: GestureResponderEvent) => void` | *required* | Function to call when pressed |
+| `disabled` | `boolean` | `false` | If true, the component will be disabled |
+{{#if hasVariants}}
+| `variant` | `'primary' \| 'secondary' \| 'outline'` | `'primary'` | The visual variant |
+{{/if}}
+{{#if hasSizes}}
+| `size` | `'small' \| 'medium' \| 'large'` | `'medium'` | The size |
+{{/if}}
+| `testID` | `string` | `undefined` | Test ID for testing purposes |
+
+{{#if hasVariants}}
+## Variants
+
+### Primary (default)
+```typescript
+<{{pascalCase name}} title="Primary" onPress={handlePress} />
+<{{pascalCase name}} title="Primary" onPress={handlePress} variant="primary" />
+```
+
+### Secondary
+```typescript
+<{{pascalCase name}} title="Secondary" onPress={handlePress} variant="secondary" />
+```
+
+### Outline
+```typescript
+<{{pascalCase name}} title="Outline" onPress={handlePress} variant="outline" />
+```
+{{/if}}
+
+{{#if hasSizes}}
+## Sizes
+
+### Small
+```typescript
+<{{pascalCase name}} title="Small" onPress={handlePress} size="small" />
+```
+
+### Medium (default)
+```typescript
+<{{pascalCase name}} title="Medium" onPress={handlePress} size="medium" />
+```
+
+### Large
+```typescript
+<{{pascalCase name}} title="Large" onPress={handlePress} size="large" />
+```
+{{/if}}
+
+## States
+
+### Disabled
+```typescript
+<{{pascalCase name}} title="Disabled" onPress={handlePress} disabled />
+```
+
+## Examples
+
+{{#if hasVariants}}
+{{#if hasSizes}}
+### Combined Props
+```typescript
+<{{pascalCase name}}
+  title="Large Secondary"
+  onPress={handlePress}
+  variant="secondary"
+  size="large"
+/>
+```
+{{/if}}
+{{/if}}
+
+### With Alert
+```typescript
+import { Alert } from 'react-native';
+
+<{{pascalCase name}}
+  title="Show Alert"
+  onPress={() => Alert.alert('Success', 'Component was pressed!')}
+/>
+```
+
+## Accessibility
+
+The {{pascalCase name}} component automatically handles:
+- Press feedback (opacity change)
+- Disabled state styling
+- Touch target sizing
+
+## Customization
+
+You can customize the component by modifying the constants:
+
+```typescript
+// Import constants
+import { {{constantCase name}}_COLORS{{#if hasSizes}}, {{constantCase name}}_SIZES{{/if}} } from '@superapp/ui/components/{{atomicLevel}}/{{kebabCase name}}';
+```
+
+## Notes
+
+- The component uses `Pressable` from React Native for better press handling
+- Press feedback is applied automatically with opacity changes
+{{#if hasVariants}}- All variants support all sizes{{/if}}
+- The component is fully typed with TypeScript

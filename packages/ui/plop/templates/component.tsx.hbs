@@ -1,0 +1,48 @@
+import { Pressable, Text } from 'react-native';
+import type { {{pascalCase name}}Props } from './{{kebabCase name}}.types';
+import { {{constantCase name}}_DEFAULTS{{#if hasSizes}}, {{constantCase name}}_SIZES{{/if}} } from './{{kebabCase name}}.constants';
+import { styles } from './{{kebabCase name}}.styles';
+
+export function {{pascalCase name}}({
+  title,
+  onPress,
+  disabled = {{constantCase name}}_DEFAULTS.disabled,
+  {{#if hasVariants}}variant = {{constantCase name}}_DEFAULTS.variant,{{/if}}
+  {{#if hasSizes}}size = {{constantCase name}}_DEFAULTS.size,{{/if}}
+  testID,
+}: {{pascalCase name}}Props) {
+  {{#if hasSizes}}
+  const sizeConfig = {{constantCase name}}_SIZES[size];
+  {{/if}}
+
+  return (
+    <Pressable
+      disabled={disabled}
+      onPress={onPress}
+      testID={testID}
+      style={({ pressed }) => [
+        styles.container,
+        {{#if hasSizes}}
+        {
+          paddingVertical: sizeConfig.paddingVertical,
+          paddingHorizontal: sizeConfig.paddingHorizontal,
+        },
+        {{/if}}
+        {{#if hasVariants}}styles[variant],{{/if}}
+        pressed && styles.pressed,
+        disabled && styles.disabled,
+      ]}
+    >
+      <Text
+        style={[
+          styles.text,
+          {{#if hasSizes}}{ fontSize: sizeConfig.fontSize },{{/if}}
+          {{#if hasVariants}}variant === 'outline' && styles.textOutline,{{/if}}
+          disabled && styles.textDisabled,
+        ]}
+      >
+        {title}
+      </Text>
+    </Pressable>
+  );
+}

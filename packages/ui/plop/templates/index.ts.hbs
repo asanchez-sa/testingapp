@@ -1,0 +1,3 @@
+export { {{pascalCase name}} } from './{{kebabCase name}}';
+export type { {{pascalCase name}}Props{{#if hasVariants}}, {{pascalCase name}}Variant{{/if}}{{#if hasSizes}}, {{pascalCase name}}Size{{/if}} } from './{{kebabCase name}}.types';
+export { {{#if hasVariants}}{{constantCase name}}_VARIANTS, {{/if}}{{#if hasSizes}}{{constantCase name}}_SIZES, {{/if}}{{constantCase name}}_COLORS, {{constantCase name}}_DEFAULTS } from './{{kebabCase name}}.constants';

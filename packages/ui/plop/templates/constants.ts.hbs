@@ -1,0 +1,45 @@
+import type { {{#if hasVariants}}{{pascalCase name}}Variant, {{/if}}{{#if hasSizes}}{{pascalCase name}}Size{{/if}} } from './{{kebabCase name}}.types';
+
+{{#if hasVariants}}
+export const {{constantCase name}}_VARIANTS: Record<{{pascalCase name}}Variant, string> = {
+  primary: 'primary',
+  secondary: 'secondary',
+  outline: 'outline',
+} as const;
+{{/if}}
+
+{{#if hasSizes}}
+export const {{constantCase name}}_SIZES: Record<{{pascalCase name}}Size, { paddingVertical: number; paddingHorizontal: number; fontSize: number }> = {
+  small: {
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    fontSize: 14,
+  },
+  medium: {
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    fontSize: 16,
+  },
+  large: {
+    paddingVertical: 16,
+    paddingHorizontal: 32,
+    fontSize: 18,
+  },
+} as const;
+{{/if}}
+
+export const {{constantCase name}}_COLORS = {
+  primary: '#007AFF',
+  secondary: '#5856D6',
+  outline: '#007AFF',
+  disabled: '#C7C7CC',
+  text: '#FFFFFF',
+  textOutline: '#007AFF',
+  textDisabled: '#8E8E93',
+} as const;
+
+export const {{constantCase name}}_DEFAULTS = {
+  {{#if hasVariants}}variant: 'primary' as {{pascalCase name}}Variant,{{/if}}
+  {{#if hasSizes}}size: 'medium' as {{pascalCase name}}Size,{{/if}}
+  disabled: false,
+} as const;
