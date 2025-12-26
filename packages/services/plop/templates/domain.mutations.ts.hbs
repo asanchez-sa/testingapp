@@ -1,0 +1,59 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { {{camelCase name}}Service } from "./{{camelCase name}}.service";
+import { {{camelCase name}}Queries } from "./{{camelCase name}}.queries";
+{{#if hasCreate}}
+import type { Create{{pascalCase name}}Data } from "./{{camelCase name}}.types";
+{{/if}}
+{{#if hasUpdate}}
+import type { Update{{pascalCase name}}Data } from "./{{camelCase name}}.types";
+{{/if}}
+
+{{#if hasCreate}}
+export const useCreate{{pascalCase name}} = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (data: Create{{pascalCase name}}Data) =>
+      {{camelCase name}}Service.create{{pascalCase name}}(data),
+    onSuccess: () => {
+      // Invalidate list queries
+      queryClient.invalidateQueries({ queryKey: {{camelCase name}}Queries.all() });
+    },
+  });
+};
+
+{{/if}}
+{{#if hasUpdate}}
+export const useUpdate{{pascalCase name}} = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ id, data }: { id: string; data: Update{{pascalCase name}}Data }) =>
+      {{camelCase name}}Service.update{{pascalCase name}}(id, data),
+    onSuccess: (updated{{pascalCase name}}) => {
+      // Invalidate and refetch queries
+      queryClient.invalidateQueries({ queryKey: {{camelCase name}}Queries.all() });
+
+      // Optimistically update the cache
+      queryClient.setQueryData(
+        {{camelCase name}}Queries.detail(updated{{pascalCase name}}.id).queryKey,
+        updated{{pascalCase name}}
+      );
+    },
+  });
+};
+
+{{/if}}
+{{#if hasDelete}}
+export const useDelete{{pascalCase name}} = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (id: string) => {{camelCase name}}Service.delete{{pascalCase name}}(id),
+    onSuccess: () => {
+      // Invalidate list queries
+      queryClient.invalidateQueries({ queryKey: {{camelCase name}}Queries.all() });
+    },
+  });
+};
+{{/if}}

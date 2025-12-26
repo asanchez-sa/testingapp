@@ -1,0 +1,36 @@
+{
+  "name": "@superapp/services",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./config": "./src/config/index.ts",
+    "./client": "./src/client/index.ts",
+    "./domains/user": "./src/domains/user/index.ts",
+    "./domains/profile": "./src/domains/profile/index.ts",
+    "./providers": "./src/providers/index.ts"
+  },
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "generate": "plop",
+    "generate:domain": "plop domain"
+  },
+  "peerDependencies": {
+    "react": "19.1.0",
+    "react-native": "0.81.5"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.90.12",
+    "axios": "^1.13.2"
+  },
+  "devDependencies": {
+    "@superapp/config": "workspace:*",
+    "@superapp/shared": "workspace:*",
+    "@types/node": "^22.10.5",
+    "@types/react": "^19.0.6",
+    "plop": "^4.0.4",
+    "typescript": "~5.7.2"
+  }
+}

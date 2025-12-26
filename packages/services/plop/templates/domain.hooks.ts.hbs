@@ -1,0 +1,21 @@
+import { useQuery } from "@tanstack/react-query";
+import { {{camelCase name}}Queries } from "./{{camelCase name}}.queries";
+
+export const use{{pascalCase name}} = (id: string) => {
+  return useQuery({{camelCase name}}Queries.detail(id));
+};
+
+export const use{{pascalCase name}}List = () => {
+  return useQuery({{camelCase name}}Queries.list());
+};
+
+// Re-export mutations
+{{#if hasCreate}}
+export { useCreate{{pascalCase name}} } from "./{{camelCase name}}.mutations";
+{{/if}}
+{{#if hasUpdate}}
+export { useUpdate{{pascalCase name}} } from "./{{camelCase name}}.mutations";
+{{/if}}
+{{#if hasDelete}}
+export { useDelete{{pascalCase name}} } from "./{{camelCase name}}.mutations";
+{{/if}}

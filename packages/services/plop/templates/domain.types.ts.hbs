@@ -1,0 +1,18 @@
+export interface {{pascalCase name}} {
+  id: string;
+  // TODO: Add your domain properties here
+  createdAt: string;
+  updatedAt: string;
+}
+
+{{#if hasCreate}}
+export interface Create{{pascalCase name}}Data {
+  // TODO: Add create properties here
+}
+{{/if}}
+
+{{#if hasUpdate}}
+export interface Update{{pascalCase name}}Data {
+  // TODO: Add update properties here
+}
+{{/if}}

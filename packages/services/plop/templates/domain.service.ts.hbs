@@ -1,0 +1,35 @@
+import { api } from "../../client/api-client";
+import { {{camelCase name}}Schema } from "./{{camelCase name}}.schemas";
+import type { {{pascalCase name}}{{#if hasCreate}}, Create{{pascalCase name}}Data{{/if}}{{#if hasUpdate}}, Update{{pascalCase name}}Data{{/if}} } from "./{{camelCase name}}.types";
+
+export const {{camelCase name}}Service = {
+  get{{pascalCase name}}: async (id: string): Promise<{{pascalCase name}}> => {
+    const response = await api.get(`/{{kebabCase name}}s/${id}`);
+    return {{camelCase name}}Schema.parse(response.data);
+  },
+
+  getAll{{pascalCase name}}s: async (): Promise<{{pascalCase name}}[]> => {
+    const response = await api.get("/{{kebabCase name}}s");
+    return response.data.map((item: unknown) => {{camelCase name}}Schema.parse(item));
+  },
+
+{{#if hasCreate}}
+  create{{pascalCase name}}: async (data: Create{{pascalCase name}}Data): Promise<{{pascalCase name}}> => {
+    const response = await api.post("/{{kebabCase name}}s", data);
+    return {{camelCase name}}Schema.parse(response.data);
+  },
+
+{{/if}}
+{{#if hasUpdate}}
+  update{{pascalCase name}}: async (id: string, data: Update{{pascalCase name}}Data): Promise<{{pascalCase name}}> => {
+    const response = await api.patch(`/{{kebabCase name}}s/${id}`, data);
+    return {{camelCase name}}Schema.parse(response.data);
+  },
+
+{{/if}}
+{{#if hasDelete}}
+  delete{{pascalCase name}}: async (id: string): Promise<void> => {
+    await api.delete(`/{{kebabCase name}}s/${id}`);
+  },
+{{/if}}
+};

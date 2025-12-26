@@ -1,0 +1,28 @@
+import { z } from "zod";
+
+export const {{camelCase name}}Schema = z.object({
+  id: z.string(),
+  // TODO: Add your schema properties here
+  createdAt: z.string(),
+  updatedAt: z.string(),
+});
+
+{{#if hasCreate}}
+export const create{{pascalCase name}}Schema = z.object({
+  // TODO: Add create schema properties here
+});
+{{/if}}
+
+{{#if hasUpdate}}
+export const update{{pascalCase name}}Schema = z.object({
+  // TODO: Add update schema properties here
+});
+{{/if}}
+
+export type {{pascalCase name}}Schema = z.infer<typeof {{camelCase name}}Schema>;
+{{#if hasCreate}}
+export type Create{{pascalCase name}}Schema = z.infer<typeof create{{pascalCase name}}Schema>;
+{{/if}}
+{{#if hasUpdate}}
+export type Update{{pascalCase name}}Schema = z.infer<typeof update{{pascalCase name}}Schema>;
+{{/if}}

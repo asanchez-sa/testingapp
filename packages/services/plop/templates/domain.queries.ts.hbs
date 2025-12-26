@@ -1,0 +1,18 @@
+import { queryOptions } from "@tanstack/react-query";
+import { {{camelCase name}}Service } from "./{{camelCase name}}.service";
+
+export const {{camelCase name}}Queries = {
+  all: () => ["{{camelCase name}}"] as const,
+
+  detail: (id: string) =>
+    queryOptions({
+      queryKey: [...{{camelCase name}}Queries.all(), "detail", id] as const,
+      queryFn: () => {{camelCase name}}Service.get{{pascalCase name}}(id),
+    }),
+
+  list: () =>
+    queryOptions({
+      queryKey: [...{{camelCase name}}Queries.all(), "list"] as const,
+      queryFn: () => {{camelCase name}}Service.getAll{{pascalCase name}}s(),
+    }),
+};
