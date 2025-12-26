@@ -1,6 +1,7 @@
+import { Button } from "@superapp/ui";
 import { Image } from "expo-image";
 import { Link } from "expo-router";
-import { Platform, StyleSheet } from "react-native";
+import { Alert, Platform, StyleSheet } from "react-native";
 import { HelloWave } from "@/components/hello-wave";
 import ParallaxScrollView from "@/components/parallax-scroll-view";
 import { ThemedText } from "@/components/themed-text";
@@ -19,6 +20,7 @@ export default function HomeScreen() {
     >
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Welcome!</ThemedText>
+
         <HelloWave />
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
@@ -79,6 +81,33 @@ export default function HomeScreen() {
           <ThemedText type="defaultSemiBold">app</ThemedText> to{" "}
           <ThemedText type="defaultSemiBold">app-example</ThemedText>.
         </ThemedText>
+      </ThemedView>
+      <ThemedView style={styles.stepContainer}>
+        <ThemedText type="subtitle">Step 4: Try UI Components</ThemedText>
+        <ThemedText>
+          Test the shared UI components from @superapp/ui package:
+        </ThemedText>
+        <Button
+          onPress={() =>
+            Alert.alert("Success", "Button from @superapp/ui works!")
+          }
+          title="Primary Button"
+        />
+        <Button
+          onPress={() => Alert.alert("Info", "Secondary variant pressed")}
+          title="Secondary Button"
+          variant="secondary"
+        />
+        <Button
+          onPress={() => Alert.alert("Info", "Outline variant pressed")}
+          title="Outline Button"
+          variant="outline"
+        />
+        <Button
+          disabled
+          onPress={() => Alert.alert("This shouldn't show")}
+          title="Disabled Button"
+        />
       </ThemedView>
     </ParallaxScrollView>
   );
