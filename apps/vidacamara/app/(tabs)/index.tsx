@@ -1,4 +1,4 @@
-import { Button } from "@superapp/ui";
+import { Button } from "@superapp/ui/components/atoms/button";
 import { Image } from "expo-image";
 import { Link } from "expo-router";
 import { Alert, Platform, StyleSheet } from "react-native";

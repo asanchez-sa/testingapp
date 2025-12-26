@@ -22,5 +22,16 @@
       "!**/convex/_generated"
     ]
   },
-  "extends": ["ultracite/core", "ultracite/react", "ultracite/remix"]
+  "linter": {
+    "rules": {
+      "performance": {
+        "noBarrelFile": "off"
+      }
+    }
+  },
+  "extends": [
+    "ultracite/core",
+    "ultracite/react",
+    "ultracite/remix"
+  ]
 }
